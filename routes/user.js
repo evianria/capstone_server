@@ -121,12 +121,19 @@ var adduser = function(req, res){
 var authUser = function(id, password, callback) {
 	console.log('authUser 호출됨 : ' + id + ', ' + password);
           
-        var columns = ['student_number', 'student_name'];
-        var tablename = 'student';
-        var hashpassword = crypto.createHash("sha512").update(password+ salt).digest("hex");
+    var columns = ['student_number', 'student_name'];
+    var tablename = 'student';
         // SQL 문을 실행합니다.
+        var execc = conn.query("select ?? from ?? where student_number = ?", ['salt', tablename, id], function(err, result) {
+            console.log(execc.sql);
+
+            salt = result[0].salt;
+
+            var hashpassword = hashpw(password, salt);
+            console.log('입력한 비밀번호: '+ hashpassword);
+        
         var exec = conn.query("select ?? from ?? where student_number = ? and student_password = ?", [columns, tablename, id, hashpassword], function(err, rows) {
-            //conn.release();  // 반드시 해제해야 함
+        
             console.log('실행 대상 SQL : ' + exec.sql);
             
             if (rows.length > 0) {
@@ -137,6 +144,7 @@ var authUser = function(id, password, callback) {
     	    	callback(null, null);
             }
         });
+    });
         conn.on('error', function(err) {      
             console.log('데이터베이스 연결 시 에러 발생함.');
             console.dir(err);
@@ -151,11 +159,12 @@ var addUser = function(id, password, name, callback) {
     console.log('데이터베이스 연결 스레드 아이디 : ' + conn.threadId);
 
     salt = Math.round((new Date().valueOf()* Math.random())) + "";
+    console.log('%d',salt);
 
-    var hashpassword = crypto.createHash("sha512").update(password+ salt).digest("hex");
+    var hashpassword = hashpw(password, salt);
 
     // 데이터를 객체로 만듦
-    var data = {student_number:id, student_name:name, student_password:hashpassword, salt:salt};
+    var data = {student_number:id, student_name:name, student_password:hashpassword, salt:salt, status:1}; //status =1인 경우는 해당 학생의 얼굴과 지문 데이터가 없음을 의미함
     	
     // SQL 문을 실행함
     var exec = conn.query('INSERT INTO student SET ?', data, function(err, result) {
@@ -181,6 +190,10 @@ var addUser = function(id, password, name, callback) {
             callback(err, null);
     });
     
+}
+//비밀번호 암호화 함수
+var hashpw = function(password,salt) {
+    return crypto.createHash('sha512').update(password+salt).digest('hex')
 }
 
 module.exports.adduser = adduser;
