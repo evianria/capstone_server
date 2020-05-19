@@ -1,4 +1,3 @@
-var bodyParser = require('body-parser');
 
 var ancommute = function(req, res){
     console.log('/process/ancommute 호출됨.');
