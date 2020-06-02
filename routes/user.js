@@ -150,7 +150,7 @@ var authUser = function(id, password, callback) {
             console.dir(err);
             
             callback(err, null);
-      });
+        });
 }
 
 //사용자를 등록하는 함수
