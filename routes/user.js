@@ -30,7 +30,6 @@ var login = function(req, res){
 			// 에러 발생 시, 클라이언트로 에러 전송
 			if (err) {
                 console.error('사용자 로그인 중 에러 발생 : ' + err.stack);
-                
                 res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
 				res.write('<h2>사용자 로그인 중 에러 발생</h2>');
                 res.write('<p>' + err.stack + '</p>');
@@ -38,25 +37,17 @@ var login = function(req, res){
                 
                 return;
             }
-			
             // 조회된 레코드가 있으면 성공 응답 전송
 			if (rows) {
-				console.dir(rows);
-
-                // 조회 결과에서 사용자 이름 확인
-				var username = rows[0].name;
-				
-				res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
-				res.write('<h1>로그인 성공</h1>');
-				res.write('<div><p>사용자 아이디 : ' + paramId + '</p></div>');
-				res.write("<br><br><a href='/public/login2.html'>다시 로그인하기</a>");
+                res.redirect('/public/prof_infor.html');
+                console.log("로그인 성공 & 메인 페이지 이동");
 				res.end();
 			
 			} else {  // 조회된 레코드가 없는 경우 실패 응답 전송
 				res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
 				res.write('<h1>로그인  실패</h1>');
 				res.write('<div><p>아이디와 패스워드를 다시 확인하십시오.</p></div>');
-				res.write("<br><br><a href='/public/login2.html'>다시 로그인하기</a>");
+				res.write("<br><br><a href='/public/login.html'>다시 로그인하기</a>");
 				res.end();
 			}
 		});
@@ -117,14 +108,14 @@ var adduser = function(req, res){
 	}
 };
 
-// 사용자를 인증하는 함수
+// 사용자(학생)를 인증하는 함수
 var authUser = function(id, password, callback) {
 	console.log('authUser 호출됨 : ' + id + ', ' + password);
           
-    var columns = ['student_number', 'student_name'];
-    var tablename = 'student';
+    var columns = ['prof_id'];
+    var tablename = 'professor';
         // SQL 문을 실행합니다.
-        var execc = conn.query("select ?? from ?? where student_number = ?", ['salt', tablename, id], function(err, result) {
+        var execc = conn.query("select ?? from ?? where prof_id = ?", ['salt', tablename, id], function(err, result) {
             console.log(execc.sql);
 
             salt = result[0].salt;
@@ -132,7 +123,7 @@ var authUser = function(id, password, callback) {
             var hashpassword = hashpw(password, salt);
             console.log('입력한 비밀번호: '+ hashpassword);
         
-        var exec = conn.query("select ?? from ?? where student_number = ? and student_password = ?", [columns, tablename, id, hashpassword], function(err, rows) {
+        var exec = conn.query("select ?? from ?? where prof_id = ? and prof_password = ?", [columns, tablename, id, hashpassword], function(err, rows) {
         
             console.log('실행 대상 SQL : ' + exec.sql);
             
@@ -164,11 +155,13 @@ var addUser = function(id, password, name, callback) {
     var hashpassword = hashpw(password, salt);
 
     // 데이터를 객체로 만듦
-    var data = {student_number:id, student_name:name, student_password:hashpassword, salt:salt, status:1}; //status =1인 경우는 해당 학생의 얼굴과 지문 데이터가 없음을 의미함
+    var data = {student_number:id, student_name:name, student_password:hashpassword, salt:salt, id:1}; //status =1인 경우는 해당 학생의 얼굴과 지문 데이터가 없음을 의미함
+    // var data = {prof_id:id, prof_number:name, prof_password:hashpassword}; //status =1인 경우는 해당 학생의 얼굴과 지문 데이터가 없음을 의미함
     	
     // SQL 문을 실행함
     var exec = conn.query('INSERT INTO student SET ?', data, function(err, result) {
-        console.log('실행 대상 SQL : ' + exec.sql);
+        // var exec = conn.query('INSERT INTO professor SET ?', data, function(err, result) {
+            console.log('실행 대상 SQL : ' + exec.sql);
         	
         if (err) {
         	console.log('SQL 실행 시 에러 발생함.');
@@ -184,10 +177,10 @@ var addUser = function(id, password, name, callback) {
     });
         
     conn.on('error', function(err) {      
-            console.log('데이터베이스 연결 시 에러 발생함.');
-            console.dir(err);
+        console.log('데이터베이스 연결 시 에러 발생함.');
+        console.dir(err);
               
-            callback(err, null);
+        callback(err, null);
     });
     
 }
