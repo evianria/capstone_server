@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://unpkg.com/tailwindcss@1.2.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="h-screen overflow-hidden flex items-center justify-center" style="background: #e2e8f0;">
+    <!-- This is an example component -->
+   <div class="flex mt-5">
+          <div class="m-3">
+            <form method="post" action="/process/attstart">  
+            <button
+              class="w-32 bg-white tracking-wide text-gray-800 font-bold rounded border-b-2 border-blue-500 hover:border-blue-600 hover:bg-blue-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center" id="att1" onClick="action1();">
+              <script>
+                var hidden1 =false;
+                function action1(){
+                    hidden1 = !hidden1;
+                    if(hidden1){
+                        document.getElementById('att1').style.visibility='hidden';
+                        document.getElementById('att2').style.visibility='visible';
+                    }
+                }
+            </script> 
+              <span class="mx-auto">출석시작</span>
+            </button>
+            </form>
+          </div>
+          <div class="m-3">
+            <form method="post" action="/process/websubject">  
+            <button
+              class="w-32 bg-white tracking-wide text-gray-800 font-bold rounded border-b-2 border-red-500 hover:border-red-600 hover:bg-red-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center" id="att2" onClick="action2();">
+              <script>
+                  document.getElementById('att2').style.visibility='hidden';
+              </script>
+              <span class="mx-auto">출석종료</span>
+            </button>
+            </form>
+          </div>
+        </div>
+</body>
+</html>
