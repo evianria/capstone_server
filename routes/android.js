@@ -1,3 +1,4 @@
+//앱 쪽 전체 코드
 var mysql = require('mysql');
 var pool= require('../database/db_conn');
 var crypto = require('crypto');
@@ -16,6 +17,7 @@ var db_pool   ={
 var conn = mysql.createConnection(db_pool);
 conn.connect();
 
+//앱에서 학생이 로그인 시도
 var ancommute = function(req, res){
     console.log('/process/ancommute 호출됨.');
 
@@ -55,6 +57,7 @@ var ancommute = function(req, res){
         });
     });
 }
+
 //비밀번호 암호화 함수
 var hashpw = function(password,salt) {
     return crypto.createHash('sha512').update(password+salt).digest('hex')
@@ -65,7 +68,8 @@ var ansubject = function(req, res){
 
     var student_number = req.body.subject;
 
-    var columns = ['subject_number','subject_id','subject_name'];
+    //var columns = ['subject_number','subject_id','subject_name'];
+    var columns = ['id_subject','subject_name'];
     var tablename = 'subject';
     
     var exec = conn.query("select ?? from ?? where student_number = ?", [columns, tablename, student_number], function(err, rows) {
@@ -94,7 +98,8 @@ var ancalendar = function(req, res){
     var columns = ['att_day','state'];
     var tablename = 'attendance';
     
-    var exec = conn.query("select ?? from ?? where att_month = ? and student_num =?", [columns, tablename, att_month, student_num], function(err, rows) {
+    var exec = conn.query("select ?? from ?? where att_month = ? and student_number =? and id_subject=?", [columns, tablename, att_month,student_num, subject], function(err, rows) {
+        //var exec = conn.query("select ?? from ?? where att_month = ? ", [columns, tablename, att_month], function(err, rows) {
         console.log('실행 대상 SQL : ' + exec.sql);
         var calrow = {rows};
         console.log(calrow);

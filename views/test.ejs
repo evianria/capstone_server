@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>List4</title>
+    <meta name="author" content="name">
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="dns-prefetch" href="//unpkg.com" />
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <!--Replace with your tailwind.css once created-->
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <!--Totally optional :) -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="./assets/js/init-alpine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"
+        integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+
+</head>
+
+<body class="bg-white font-sans leading-normal tracking-normal mt-12">
+
+    <!--Nav-->
+    <nav class="pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 bg-cover" style="background-color:#edf2f7">
+
+        <div class="flex flex-wrap items-center">
+            <div class="flex w-full pt-8 content-center justify-center md:justify-center text-black px-2">
+                <a href="index.html">
+                    <img src="C:\Users\nhic0\Documents\tailwind\StarterTemplate-master\dist\img.png" alt="조선대학교 로고"
+                        width=200px height=80px href="index.html">
+                </a>
+            </div>
+
+            <div class="flex w-full pt-1 content-center justify-between md:justify-end">
+                <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
+                    <!--<li class="flex-1 md:flex-none md:mr-3">
+                   <a class="inline-block py-2 px-4 text-white no-underline" href="#">Active</a>
+                </li>
+                <li class="flex-1 md:flex-none md:mr-3">
+                   <a class="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4" href="#">link</a>
+                </li>-->
+
+                    <li class="flex-1 md:flex-none md:mr-3">
+                        <div class="relative inline-block">
+                            <button onclick="toggleDD('myDropdown')"
+                                class="drop-button text-black focus:outline-none font-semibold text-xs"> Hi, 박서준 <svg
+                                    class="h-3 fill-current inline" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                </svg></button>
+                            <div id="myDropdown"
+                                class="dropdownlist absolute bg-gray-900 text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">
+                                <input type="text" class="drop-search p-2 text-gray-600" placeholder="Search.."
+                                    id="myInput" onkeyup="filterDD('myDropdown','myInput')">
+                                <a href="profile.html"
+                                    class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i
+                                        class="fa fa-user fa-fw"></i> Profile</a>
+                                <div class="border border-gray-800"></div>
+                                <a href="#"
+                                    class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i
+                                        class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+
+    <div class="flex flex-col md:flex-row">
+
+        <div class="bg-blue-800 shadow-lg h-full fixed bottom-0 mt-8 md:relative md:h-full z-10 w-full md:w-40">
+            <div
+                class="md:mt-12 w-40 md:w-40 md:fixed md:left-0 h-full md:top-5 content-center md:content-start text-left justify-between">
+                <div class="bg-blue-800 p-6 w-40 shadow mt-1 text-xl text-white">
+                    <h3 class="font-bold pl-2">Menu</h3>
+                </div>
+                <ul
+                    class="h-full bg-blue-800 list-reset flex-row w-40 flex-start absolute md:flex-col py-0 md:py-3 px-1 md:px-2 text-center md:text-left">
+                    <li class="mr-3 flex-1">
+                        <a href="index.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-pink-500 border-b-2 border-gray-800 hover:border-pink-500">
+                            <span
+                                class="pb-1 md:pb-0 text-xs hover:text-pink-500 md:text-base text-white md:text-white block md:inline-block">Schedule</span>
+                        </a>
+                    </li>
+                    <li class="mr-3 flex-1">
+                        <a href="list3.html"
+                            class="block py-1 md:py-3 pl-1 align-middle text-white no-underline hover:text-purple-500 border-b-2 border-gray-800 hover:border-purple-500">
+                            <span
+                                class="pb-1 md:pb-0 hover:text-purple-500 text-xs md:text-base text-white md:text-white block md:inline-block">Communication</span>
+                        </a>
+                    </li>
+                    <li class="mr-3 flex-1">
+                        <a href="#"
+                            class="block py-1 md:py-3 pl-0 md:pl-1 align-middle text-white no-underline hover:text-blue-500 border-b-2 border-gray-800 hover:border-blue-500">
+                            <span
+                                class="pb-1 md:pb-0 text-xs hover:text-blue-500 md:text-base text-white md:text-white block md:inline-block">Experiment</span>
+                        </a>
+                    </li>
+                    <li class="mr-3 flex-1">
+                        <a href="#"
+                            class="block py-1 md:py-3 pl-0 md:pl-1 align-middle text-white no-underline hover:text-green-500 border-b-2 border-gray-800 hover:border-green-500">
+                            <span
+                                class="pb-1 md:pb-0 hover:text-green-500 text-xs md:text-base text-white md:text-white block md:inline-block">Programming</span>
+                        </a>
+                    </li>
+                    <li class="mr-3 flex-1">
+                        <a href="#"
+                            class="block py-1 md:py-3 pl-0 md:pl-1 align-middle text-white no-underline hover:text-red-500 border-b-2 border-gray-800 hover:border-red-500">
+                            <span
+                                class="pb-1 md:pb-0 hover:text-red-500 text-xs md:text-base text-white md:text-white block md:inline-block">Capstone</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+
+        <div class="main-content bg-gray-100 pl-3 mt-20 md:mt-13 pb-24 md:pb-5 w-full">
+
+            <div class="bg-blue-800 p-12 shadow text-xl text-white">
+                <h3 class="font-bold float-left align-middle" id="top">Student list</h3>
+                <button
+                    class="float-right px-4 align-middle py-2 text-md font-bold leading-none text-white duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                    출석 종료 !
+                </button>
+                <button
+                    class="px-4 py-2 mr-3 align-middle text-md float-right font-bold leading-none text-white duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                    출석 시작 !
+                </button>
+            </div>
+
+            <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                            <tr
+                                class="text-md font-semibold tracking-wide text-left text-gray-700 uppercase border-b dark:border-gray-700 bg-gray-100 dark:text-gray-600 dark:bg-gray-900">
+                                <th class="px-8 py-3"> STUDENT</th>
+                                <th class="px-1 py-3"></th>
+                                <th class="px-8 py-3"> STUDENT_NUMBER</th>
+                                <th class="px-1 py-3"></th>
+                                <td class="px-2 py-3 text-md">
+                                    <!--<span class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-400 rounded-full dark:bg-blue-700 dark:text-blue-300">-->
+                                    출석
+                                    <!--</span>-->
+                                </td>
+
+                                </th>
+                                <th class="px-1 py-3">
+                                <td class="px-2 py-3 text-md">
+                                    <!--<span class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-400 rounded-full dark:bg-yellow-700 dark:text-yellow-300">-->
+                                    지각
+                                    <!--</span>-->
+                                </td>
+                                </th>
+                                <th class="px-1 py-3">
+                                <td class="px-2 py-3 text-md">
+                                    <!--<span class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-400 rounded-full dark:bg-red-700 dark:text-red-300">-->
+                                    결석
+                                    <!--</span>-->
+                                </td>
+                                </th>
+                                <th class="px-1 py-3">
+                                <td class="px-2 py-3 text-md">
+                                    출석 현황
+                                </td>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-8 py-1">
+                                    <div class="flex items-center text-xs">
+                                        <!-- Avatar with inset shadow -->
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full"
+                                                src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                                                alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-base">Hans Burger</p>
+
+                                        </div>
+                                </td>
+                                <th class="px-1 py-1">
+                                <td class="px-16 py-1 text-base font-semibold text-gray-600 dark:text-gray-400">
+                                    20120000
+                                </td>
+                                </th>
+
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-200 rounded-full dark:bg-blue-700 dark:text-blue-300">
+                                        15
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-200 rounded-full dark:bg-yellow-700 dark:text-yellow-300">
+                                        1
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-1 py-1">
+                                <td class="px-2 py-1">
+                                    <div class="my-3">
+                                        <button onclick="moveHome();"
+                                            class="flex items-center justify-between px-4 py-2 text-xs font-semibold leading-5 text-white transition-colors duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                                            Calender
+                                        </button>
+                                    </div>
+                                </td>
+                                </th>
+                            </tr>
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-8 py-1">
+                                    <div class="flex items-center text-xs">
+                                        <!-- Avatar with inset shadow -->
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full"
+                                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&facepad=3&fit=facearea&s=707b9c33066bf8808c934c8ab394dff6"
+                                                alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="text-base font-semibold">Jolina Angelie</p>
+                                        </div>
+                                    </div>
+                                <th class="px-1 py-1">
+                                <td class="px-16 py-1 text-base font-semibold text-gray-600 dark:text-gray-400">
+                                    20130000
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-200 rounded-full dark:bg-blue-700 dark:text-blue-300">
+                                        14
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-200 rounded-full dark:bg-yellow-700 dark:text-yellow-300">
+                                        2
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-1 py-1">
+                                <td class="px-2 py-1">
+                                    <div class="my-3">
+                                        <button onclick="moveHome();"
+                                            class="flex items-center justify-between px-4 py-2 text-xs font-semibold leading-5 text-white transition-colors duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                                            Calender
+                                        </button>
+                                    </div>
+                                </td>
+                                </th>
+                            </tr>
+
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-8 py-1">
+                                    <div class="flex items-center text-xs">
+                                        <!-- Avatar with inset shadow -->
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full"
+                                                src="https://images.unsplash.com/photo-1551069613-1904dbdcda11?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                                                alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-base">Sarah Curry</p>
+                                        </div>
+                                    </div>
+                                <th class="px-1 py-1">
+                                <td class="px-16 py-1 text-base font-semibold text-gray-600 dark:text-gray-400">
+                                    20140000
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-200 rounded-full dark:bg-blue-700 dark:text-blue-300">
+                                        15
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-200 rounded-full dark:bg-yellow-700 dark:text-yellow-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-300">
+                                        1
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-1 py-1">
+                                <td class="px-2 py-1">
+                                    <div class="my-3">
+                                        <button onclick="moveHome();"
+                                            class="flex items-center justify-between px-4 py-2 text-xs font-semibold leading-5 text-white transition-colors duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                                            Calender
+                                        </button>
+                                    </div>
+                                </td>
+                                </th>
+                            </tr>
+
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-8 py-1">
+                                    <div class="flex items-center text-xs">
+                                        <!-- Avatar with inset shadow -->
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full"
+                                                src="https://images.unsplash.com/photo-1551006917-3b4c078c47c9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                                                alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-base">Rulia Joberts</p>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <th class="px-1 py-1">
+                                <td class="px-16 py-1 text-base font-semibold text-gray-600 dark:text-gray-400">
+                                    20150000
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-200 rounded-full dark:bg-blue-700 dark:text-blue-300">
+                                        16
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-200 rounded-full dark:bg-yellow-700 dark:text-yellow-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-1 py-1">
+                                <td class="px-2 py-1">
+                                    <div class="my-3">
+                                        <button onclick="moveHome();"
+                                            class="flex items-center justify-between px-4 py-2 text-xs font-semibold leading-5 text-white transition-colors duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                                            Calender
+                                        </button>
+                                    </div>
+                                </td>
+                                </th>
+                            </tr>
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-8 py-1">
+                                    <div class="flex items-center text-xs">
+                                        <!-- Avatar with inset shadow -->
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full"
+                                                src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                                                alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-base">Hans Burger</p>
+                                        </div>
+                                </td>
+                                <th class="px-1 py-1">
+                                <td class="px-16 py-1 text-base font-semibold text-gray-600 dark:text-gray-400">
+                                    20160000
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-200 rounded-full dark:bg-blue-700 dark:text-blue-300">
+                                        16
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-200 rounded-full dark:bg-yellow-700 dark:text-yellow-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-1 py-1">
+                                <td class="px-2 py-1">
+                                    <div class="my-3">
+                                        <button onclick="moveHome();"
+                                            class="flex items-center justify-between px-4 py-2 text-xs font-semibold leading-5 text-white transition-colors duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                                            Calender
+                                        </button>
+                                    </div>
+                                </td>
+                                </th>
+                            </tr>
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-8 py-1">
+                                    <div class="flex items-center text-xs">
+                                        <!-- Avatar with inset shadow -->
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full"
+                                                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&facepad=3&fit=facearea&s=707b9c33066bf8808c934c8ab394dff6"
+                                                alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-base">Jolina Angelie</p>
+
+                                        </div>
+                                    </div>
+                                <th class="px-1 py-1">
+                                <td class="px-16 py-1 text-base font-semibold text-gray-600 dark:text-gray-400">
+                                    20170000
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-200 rounded-full dark:bg-blue-700 dark:text-blue-300">
+                                        14
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-200 rounded-full dark:bg-yellow-700 dark:text-yellow-300">
+                                        2
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-1 py-1">
+                                <td class="px-2 py-1">
+                                    <div class="my-3">
+                                        <button onclick="moveHome();"
+                                            class="flex items-center justify-between px-4 py-2 text-xs font-semibold leading-5 text-white transition-colors duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                                            Calender
+                                        </button>
+                                    </div>
+                                </td>
+                                </th>
+                            </tr>
+
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-8 py-1">
+                                    <div class="flex items-center text-xs">
+                                        <!-- Avatar with inset shadow -->
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full"
+                                                src="https://images.unsplash.com/photo-1551069613-1904dbdcda11?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                                                alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-base">Sarah Curry</p>
+
+                                        </div>
+                                    </div>
+                                <th class="px-1 py-1">
+                                <td class="px-16 py-1 text-base font-semibold text-gray-600 dark:text-gray-400">
+                                    20180000
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-200 rounded-full dark:bg-blue-700 dark:text-blue-300">
+                                        15
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-200 rounded-full dark:bg-yellow-700 dark:text-yellow-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-300">
+                                        1
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-1 py-1">
+                                <td class="px-2 py-1">
+                                    <div class="my-3">
+                                        <button onclick="moveHome();"
+                                            class="flex items-center justify-between px-4 py-2 text-xs font-semibold leading-5 text-white transition-colors duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                                            Calender
+                                        </button>
+                                    </div>
+                                </td>
+                                </th>
+                            </tr>
+
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-8 py-1">
+                                    <div class="flex items-center text-xs">
+                                        <!-- Avatar with inset shadow -->
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full"
+                                                src="https://images.unsplash.com/photo-1551006917-3b4c078c47c9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                                                alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-base">Rulia Joberts</p>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <th class="px-1 py-1">
+                                <td class="px-16 py-1 text-base font-semibold text-gray-600 dark:text-gray-400">
+                                    20190000
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-200 rounded-full dark:bg-blue-700 dark:text-blue-300">
+                                        16
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-200 rounded-full dark:bg-yellow-700 dark:text-yellow-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-4 py-1">
+                                <td class="px-4 py-1 text-xs">
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-300">
+                                        0
+                                    </span>
+                                </td>
+                                </th>
+                                <th class="px-1 py-1">
+                                <td class="px-2 py-1">
+                                    <div class="my-3">
+                                        <button onclick="moveHome();"
+                                            class="flex items-center justify-between px-4 py-2 text-xs font-semibold leading-5 text-white transition-colors duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                                            Calender
+                                        </button>
+                                    </div>
+                                </td>
+                                </th>
+                            </tr>
+                            <!-- AlpineJS -->
+                            <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+                                defer></script>
+                            <!-- Font Awesome -->
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+                                integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs="
+                                crossorigin="anonymous"></script>
+                            <script>
+                                /*Toggle dropdown list*/
+                                function toggleDD(myDropMenu) {
+                                    document.getElementById(myDropMenu).classList.toggle("invisible");
+                                }
+                                /*Filter dropdown options*/
+                                function filterDD(myDropMenu, myDropMenuSearch) {
+                                    var input, filter, ul, li, a, i;
+                                    input = document.getElementById(myDropMenuSearch);
+                                    filter = input.value.toUpperCase();
+                                    div = document.getElementById(myDropMenu);
+                                    a = div.getElementsByTagName("a");
+                                    for (i = 0; i < a.length; i++) {
+                                        if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                            a[i].style.display = "";
+                                        } else {
+                                            a[i].style.display = "none";
+                                        }
+                                    }
+                                }
+                                // Close the dropdown menu if the user clicks outside of it
+                                window.onclick = function (event) {
+                                    if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
+                                        var dropdowns = document.getElementsByClassName("dropdownlist");
+                                        for (var i = 0; i < dropdowns.length; i++) {
+                                            var openDropdown = dropdowns[i];
+                                            if (!openDropdown.classList.contains('invisible')) {
+                                                openDropdown.classList.add('invisible');
+                                            }
+                                        }
+                                    }
+                                }
+
+                                var openmodal = document.querySelectorAll('.modal-open')
+                                for (var i = 0; i < openmodal.length; i++) {
+                                    openmodal[i].addEventListener('click', function (event) {
+                                        event.preventDefault()
+                                        toggleModal()
+                                    })
+                                }
+
+                                //let overlay = document.querySelector('.modal-overlay')
+                                //overlay.addEventListener('click', toggleModal)
+
+                                var closemodal = document.querySelectorAll('.modal-close')
+                                for (var i = 0; i < closemodal.length; i++) {
+                                    closemodal[i].addEventListener('click', toggleModal)
+                                }
+
+                                document.onkeydown = function (evt) {
+                                    evt = evt || window.event
+                                    var isEscape = false
+                                    if ("key" in evt) {
+                                        isEscape = (evt.key === "Escape" || evt.key === "Esc")
+                                    } else {
+                                        isEscape = (evt.keyCode === 27)
+                                    }
+                                    if (isEscape && document.body.classList.contains('modal-active')) {
+                                        toggleModal()
+                                    }
+                                };
+
+
+                                function toggleModal() {
+                                    const body = document.querySelector('body')
+                                    const modal = document.querySelector('.modal')
+                                    modal.classList.toggle('opacity-0')
+                                    modal.classList.toggle('pointer-events-none')
+                                    body.classList.toggle('modal-active')
+                                }
+                            </script>
+                            <script type="text/javaScript">
+function moveHome(){
+     location.href = "home_test.html";
+}
+</script>
+</body>
+
+</html>

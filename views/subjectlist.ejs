@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>List4</title>
+   <meta name="author" content="name">
+   <meta name="description" content="description here">
+   <meta name="keywords" content="keywords,here">
+
+   <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+   <link rel="dns-prefetch" href="//unpkg.com" />
+   <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+   <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
+   <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+   <!--Replace with your tailwind.css once created-->
+   <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+   <!--Totally optional :) -->
+   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+   <script src="./assets/js/init-alpine.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"
+      integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+
+</head>
+
+<body class="bg-white font-sans leading-normal tracking-normal mt-12">
+
+   <!--Nav-->
+   <nav class="pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 bg-cover" style="background-color:#edf2f7">
+
+      <div class="flex flex-wrap items-center">
+         <div class="flex w-full pt-8 content-center justify-center md:justify-center text-black px-2">
+            <a href="index.html">
+               <img src="https://upload.wikimedia.org/wikipedia/ko/archive/a/a8/20120125011215%21Chosun-basic1.png"
+                  alt="조선대학교 로고" width=300px height=120px href="index.html">
+            </a>
+         </div>
+
+         <div class="flex w-full pt-1 content-center justify-between md:justify-end">
+            <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
+               <li class="flex-1 md:flex-none md:mr-3">
+                  <div class="relative inline-block">
+                     <button onclick="toggleDD('myDropdown')"
+                        class="drop-button text-black focus:outline-none font-semibold text-xs"> Hi,
+                        <%= result[0].prof_name %> <svg class="h-3 fill-current inline"
+                           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                           <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                           </svg></button>
+                     <div id="myDropdown"
+                        class="dropdownlist w-32 absolute bg-gray-900 text-black right-0 mt-3 p-3 overflow-auto z-30 invisible">
+                        <form method="post" action="/process/logout">
+                           <button
+                              class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i
+                                 class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
+                           </button>
+                        </form>
+                     </div>
+                  </div>
+               </li>
+            </ul>
+         </div>
+      </div>
+
+   </nav>
+   <div class="flex flex-col md:flex-row">
+
+      <div class="shadow-lg h-full fixed bottom-0 mt-8 md:relative md:h-full z-10 w-full md:w-40"
+         style="background-color: #084B8A;">
+         <div
+            class="md:mt-24 w-40 md:w-40 md:fixed md:left-0 h-full md:top-5 content-center md:content-start text-left justify-between">
+            <div class="p-6 w-40 shadow text-xl text-white" style="background-color: #084B8A;">
+               <h3 class="font-bold pl-2">과목 목록</h3>
+            </div>
+
+            <ul class="h-full list-reset flex-row w-40 flex-start absolute md:flex-col py-0 md:py-3 px-1 md:px-2 text-center md:text-left"
+               style="background-color: #084B8A;">
+               <% for (var i = 0; i < names.length; i++) { %>
+               <%if(names[i]!="no"){%>
+               <li class="mr-3 flex-1">
+                  <!-- <form method="post" action="/public/subjectlist"> -->
+                  <a id=<%= result[i].subject_name %> href='/process/subjectlist?search=<%=result[i].subject_name%>'
+                     class="block py-1 md:py-3 pl-0 md:pl-1 align-middle text-white no-underline hover:text-red-500 border-b-2 border-gray-800 hover:border-read-500">
+                     <span
+                        class="pb-1 md:pb-0 hover:text-red-500 text-xs md:text-base text-white md:text-white block md:inline-block"><%= names[i]%></span>
+                  </a>
+                  <!-- </form> -->
+               </li>
+               <%} %>
+               <%}%>
+                </ul>
+            </div>
+
+
+                </div>
+
+
+            <div class="main-content bg-gray-100 mt-16 md:mt-13 pb-24 pl-3 md:pb-5 w-full">
+
+               <div class="p-8 h-20 shadow mt-0 text-xl text-white" style="background-color: #084B8A;">
+               <h3 class="font-bold text-2xl pl-2 float-left" id="top">학생 명단</h3>     
+                <form method="post" action= "/process/attstop">
+                <button class="float-right px-4 align-middle py-2 text-md font-bold leading-none text-white duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray" id="att2" onClick="action2();">
+                     <script>
+                        document.getElementById('att2').style.visibility = 'hidden';
+                        var hidden2 = false;
+                        function action2() {
+                           hidden2 = !hidden2;
+                           if (hidden2) {
+                              document.getElementById('att1').style.visibility = 'visible';
+                              document.getElementById('att2').style.visibility = 'hidden';
+                           }
+                        }
+                     </script>
+                  출석 종료
+                </button>
+                 </form>
+                <form method="post" action="/process/attstart">
+                <button
+                class="px-4 py-2 mr-3 align-middle text-md float-right font-bold leading-none text-white duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray" id="att1" onClick="action1();">
+                <script>
+                  var hidden1 = false;
+                  function action1() {
+                     hidden1 = !hidden1;
+                     if (hidden1) {
+                        document.getElementById('att1').style.visibility = 'hidden';
+                        document.getElementById('att2').style.visibility = 'visible';
+                     }
+                  }
+               </script>
+                  출석 시작
+                </button>
+                </form>
+
+            </div>
+            <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+              <table class="w-full whitespace-no-wrap">
+               <thead>
+                 <tr class="text-lg font-semibold tracking-wide text-left text-gray-700 uppercase border-b dark:border-gray-700 bg-gray-100 dark:text-gray-600 dark:bg-gray-900">
+                  <th class="px-8 py-3"> 학생</th>
+                    <th class="px-1 py-3"></th>
+                    <th class="px-8 py-3"> 학번</th>
+                     <th class="px-1 py-3"></th>
+                     <td class="px-4 py-3 text-lg">
+                        <!--<span class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-400 rounded-full dark:bg-blue-700 dark:text-blue-300">-->
+                         출석
+                        <!--</span>-->
+                     </td>
+  
+                  </th>
+                  <th class="px-1 py-3">
+                     <td class="px-2 py-3 text-lg">
+                        <!--<span class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-400 rounded-full dark:bg-yellow-700 dark:text-yellow-300">-->
+                         지각
+                        <!--</span>-->
+                      </td>
+                  </th>
+                  <th class="px-1 py-3">
+                     <td class="px-2 py-3 text-lg">
+                        <!--<span class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-400 rounded-full dark:bg-red-700 dark:text-red-300">-->
+                         결석
+                        <!--</span>-->
+                      </td>
+                  </th>
+                  <th class="px-1 py-3">
+                     <td class="px-2 py-3 text-lg">
+                         출석 현황
+                     </td>
+                  </th>
+                 </tr>
+               </thead>
+  
+                  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+            <% var state= [];%>
+               <% var student= [];%>
+               <% var count = 0;%>
+               <% var zero = 0;%>
+               <% var two = 0;%>
+               <% var three = 0;%>
+               <%if(student.length!=0) student = [];%>
+               <% for (var i = 0; i < result.length; i++) { %>
+               <%if(result[i].hasOwnProperty('prof_name')){count = count+1;}else if(result[i].hasOwnProperty('att_month')){%>
+                  <%continue;}else{%>
+               <%if(student.indexOf(result[i].student_number)==-1){%>
+               <% student.push(result[i].student_number);%>
+               <tr class="text-gray-700 dark:text-gray-400">
+                  <td class="px-8 py-4">
+                     <div class="flex items-center text-sm">
+
+                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                           <img class="object-cover w-full h-full rounded-full"
+                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcShbALPrCmdIZxOnboRVqd21CLlUhJtb-SiFg&usqp=CAU"
+                              alt="" loading="lazy" />
+                           <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                        </div>
+                        <div>
+                           <p class="font-semibold text-base">
+                              <%= result[i].student_name %></p>
+
+                        </div>
+                  </td>
+                  <th class="px-1 py-1">
+                  <td class="px-5 py-1 text-base font-semibold text-gray-600 dark:text-gray-400">
+                     <% var student_number = result[i].student_number%>
+                     <%= result[i].student_number %>
+                  </td>
+                  </th>
+
+                  <th class="px-4 py-1">
+                  <td class="px-4 py-1 text-sm">
+                     <span
+                        class="px-2 py-1 font-semibold leading-tight text-blue-800 bg-blue-200 rounded-full dark:bg-blue-700 dark:text-blue-300">
+                        <%zero = 0;%>
+                        <% for (var j = count; j < result.length; j++) { %>
+                        <%if(student_number==result[j].student_number && result[j].state == 0){%>
+                        <%zero = zero+1;%>
+                        <%}%>
+                        <%}%>
+                        <%=zero%>
+                     </span>
+                  </td>
+                  </th>
+                  <th class="px-4 py-1">
+                  <td class="px-4 py-1 text-sm">
+                     <span
+                        class="px-2 py-1 font-semibold leading-tight text-yellow-800 bg-yellow-200 rounded-full dark:bg-yellow-700 dark:text-yellow-300">
+                        <%three = 0;%>
+                        <% for (var z = count; z < result.length; z++) { %>
+                        <%if(student_number==result[z].student_number && result[z].state == 3){%>
+                        <%three = three+1;%>
+                        <%}%>
+                        <%}%>
+                        <%=three%>
+                     </span>
+                  </td>
+                  </th>
+                  <th class="px-4 py-1">
+                  <td class="px-4 py-1 text-sm">
+                     <span
+                        class="px-2 py-1 font-semibold leading-tight text-red-800 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-300">
+                        <% two=0;%>
+                        <% for (var x = count; x < result.length; x++) { %>
+                        <%if(student_number==result[x].student_number && result[x].state == 1){%>
+                        <%two = two+1;%>
+                        <%}%>
+                        <%}%>
+                        <%=two%>
+                     </span>
+                  </td>
+                  </th>
+                  <th class="px-1 py-1">
+                  <td class="px-2 py-1">
+                     <div class="my-3">
+                        <button>
+                           <a id=<%= result[i].student_number %>
+                              href='/process/stucalendar?search=<%=result[i].student_number%>'
+                              class="flex items-center justify-between px-4 py-2 text-xs font-semibold leading-5 text-white transition-colors duration-150 bg-gray-500 border border-transparent rounded-lg active:bg-gray-500 hover:bg-gray-800 focus:outline-none focus:shadow-outline-gray">
+                              출석현황
+                           </a>
+                        </button>
+                     </div>
+                  </td>
+                  </th>
+               </tr>
+               <%}else{student.push("overlap_names");}%>
+               <%}%>
+            <%}%>
+               <!-- AlpineJS -->
+               <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+               <!-- Font Awesome -->
+               <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+                  integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+               <script>
+                  /*Toggle dropdown list*/
+                  function toggleDD(myDropMenu) {
+                     document.getElementById(myDropMenu).classList.toggle("invisible");
+                  }
+                  /*Filter dropdown options*/
+                  function filterDD(myDropMenu, myDropMenuSearch) {
+                     var input, filter, ul, li, a, i;
+                     input = document.getElementById(myDropMenuSearch);
+                     filter = input.value.toUpperCase();
+                     div = document.getElementById(myDropMenu);
+                     a = div.getElementsByTagName("a");
+                     for (i = 0; i < a.length; i++) {
+                        if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                           a[i].style.display = "";
+                        } else {
+                           a[i].style.display = "none";
+                        }
+                     }
+                  }
+                  // Close the dropdown menu if the user clicks outside of it
+                  window.onclick = function (event) {
+                     if (!event.target.matches('.drop-button') && !event.target.matches('.drop-search')) {
+                        var dropdowns = document.getElementsByClassName("dropdownlist");
+                        for (var i = 0; i < dropdowns.length; i++) {
+                           var openDropdown = dropdowns[i];
+                           if (!openDropdown.classList.contains('invisible')) {
+                              openDropdown.classList.add('invisible');
+                           }
+                        }
+                     }
+                  }
+
+                  var openmodal = document.querySelectorAll('.modal-open')
+                  for (var i = 0; i < openmodal.length; i++) {
+                     openmodal[i].addEventListener('click', function (event) {
+                        event.preventDefault()
+                        toggleModal()
+                     })
+                  }
+
+                  var closemodal = document.querySelectorAll('.modal-close')
+                  for (var i = 0; i < closemodal.length; i++) {
+                     closemodal[i].addEventListener('click', toggleModal)
+                  }
+
+                  document.onkeydown = function (evt) {
+                     evt = evt || window.event
+                     var isEscape = false
+                     if ("key" in evt) {
+                        isEscape = (evt.key === "Escape" || evt.key === "Esc")
+                     } else {
+                        isEscape = (evt.keyCode === 27)
+                     }
+                     if (isEscape && document.body.classList.contains('modal-active')) {
+                        toggleModal()
+                     }
+                  };
+
+
+                  function toggleModal() {
+                     const body = document.querySelector('body')
+                     const modal = document.querySelector('.modal')
+                     modal.classList.toggle('opacity-0')
+                     modal.classList.toggle('pointer-events-none')
+                     body.classList.toggle('modal-active')
+                  }
+               </script>
+               <script type="text/javaScript">
+</script>
+</body>
+
+</html>
