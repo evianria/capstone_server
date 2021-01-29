@@ -47,11 +47,17 @@ var login = function (req, res) {
             }
             // 조회된 레코드가 있으면 성공 응답 전송
             if (rows) {
+                var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                let today = new Date();
+                var month = today.getMonth();
+                var month_name = [{'month':MONTH_NAMES[month]}];
                 console.log("로그인 성공 & 메인 페이지 이동");
+
                 profSubject(paramId, function (err, result) {
                     res.writeHead('200', { 'Content-Type': 'text/html;charset=utf8' });
                     main_result = result;
                     change_result = result;
+                    Array.prototype.push.apply(result, month_name);
                     var context = { result: result };
                     //console.log("메인 페이지에 전송되는 데이터: " + JSON.stringify(context));
                     req.app.render('main_page', context, function (err, html) {
@@ -84,7 +90,7 @@ var authUser = function (id, password, callback) {
 
     var columns = ['prof_id', 'prof_name'];
     var tablename = 'professor';
-    // SQL 문을 실행합니다.
+    // SQL 문을 실행
     var execc = conn.query("select ?? from ?? where prof_id = ?", ['salt', tablename, id], function (err, result) {
         console.log(execc.sql);
 
@@ -137,10 +143,14 @@ module.exports.logout = logout;
 profSubject = function (id, callback) {
     console.log('profSubject 호출됨 : ' + id);
 
-    var columns = ['prof_name', 'subject_month','subject_date', 'subject_name'];
+    var today = new Date()
+    var month = today.getMonth()+1
+    console.log("today의 month: "+month);
+
+    var columns = ['subject_month', 'prof_name','subject_date', 'subject_name'];
     var tablename = 'prof_attend';
     // SQL 문을 실행
-    var exec = conn.query("select ?? from ?? where id_prof = ?", [columns, tablename, id, hashpassword], function (err, rows) {
+    var exec = conn.query("select ?? from ?? where id_prof = ? and subject_month =?", [columns, tablename, id, month], function (err, rows) {
 
         console.log('실행 대상 SQL : ' + exec.sql);
 
@@ -174,6 +184,55 @@ var profName = function (prof_name, callback) {
 
         if (rows.length > 0) {
             console.log("과목 리스트 및 일수: " + rows);
+            callback(null, rows);
+        } else {
+            console.log("과목 리스트가 존재하지 않음.");
+            callback(null, null);
+        }
+    });
+    conn.on('error', function (err) {
+        console.log('데이터베이스 연결 시 에러 발생함.');
+        console.dir(err);
+
+        callback(err, null);
+    });
+}
+
+var hello = function (req, res) {
+    var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var month = req.body.month || req.query.month;
+    var month_name = {'month':month};
+    console.log("month값: "+ MONTH_NAMES[month-1])
+    mainRestart(paramId, month, function (err, result) {
+        res.writeHead('200', { 'Content-Type': 'text/html;charset=utf8' });
+        main_result = result;
+        change_result = result;
+        Array.prototype.push.apply(result, month_name);
+        console.log(month_name)
+        var context = { result: result };
+        console.log("메인 페이지에 전송되는 데이터: " + JSON.stringify(context));
+        req.app.render('main_page', context, function (err, html) {
+            console.log("메인 페이지로 이동");
+            res.end(html);
+        })
+
+    });
+}
+module.exports.hello = hello;
+
+// 사용자(교수)의 메인 페이지 과목 리스트 불러오기
+var mainRestart = function (id, month, callback) {
+    console.log('mainRestart 호출됨 : ' + month+"월");
+
+    var columns = ['prof_name','subject_date', 'subject_name'];
+    var tablename = 'prof_attend';
+    // SQL 문을 실행
+    var exec = conn.query("select ?? from ?? where id_prof = ? and subject_month =?", [columns, tablename, id, month], function (err, rows) {
+
+        console.log('실행 대상 SQL : ' + exec.sql);
+
+        if (rows.length > 0) {
+            //console.log(rows);
             callback(null, rows);
         } else {
             console.log("과목 리스트가 존재하지 않음.");
