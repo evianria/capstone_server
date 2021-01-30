@@ -157,10 +157,13 @@
                                           <span class="text-lg font-bold text-gray-800"><%= result[result.length-1].month%></span>
                                           <span x-text="year" class="ml-1 text-lg text-gray-600 font-normal"></span>
                                       </div>
-                                      <form action="/process/hello" method="post">
                                       <div class="border rounded-lg px-1" style="padding-top: 2px;">
                                         <!-- 밑 버튼 두 개가 캘린더 월 변경되는 버튼// 버튼 클릭하면 해당 월에 맞춰 업데이트 되도록 서버 수정 예정-->
-                                          <button
+                                        <% var year = new Date().getFullYear() %>
+                                        <% var month = result[result.length-2].subject_month %>  
+                                        
+                                      <form action="/process/lastMonth" method="post">
+                                        <button
                                               type="submit"
                                               class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
                                               :class="{'cursor-not-allowed opacity-25': month == 0 }"
@@ -170,20 +173,25 @@
                                               </svg>
                                           </button>
                                           <div class="mb-4">
-                                            <input name="month" id="month" type="hidden">
+                                            <input name="month" id="month" type="hidden" value= "<%=month%>">
                                           </div>
+                                        </form>
                                           <div class="border-r inline-flex h-6"></div>
+                                          <form action="/process/nextMonth" method="post">
                                           <button
                                               type="submit"
                                               class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
-                                              :class="{'cursor-not-allowed opacity-25': month == 11 }"
-                                              @click="if(month == 11) {month=0; year++} else{month++}; getNoOfDays()">
+                                              :class="{'cursor-not-allowed opacity-25': month == 11 }">
                                               <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                                               </svg>
                                           </button>
+                                          <div class="mb-4">
+                                            <input name="month" id="month" type="hidden" value= "<%=month%>">
+                                          </div>
+                                        </form>
                                       </div>
-                                    </form>
+                                    
                                   </div>
 
                                   <div class="-mx-1 -mb-1">
@@ -200,8 +208,6 @@
                                       </div>
 
                                       <div class="flex flex-wrap border-t border-l">
-                                          <% var year = new Date().getFullYear() %>
-                                          <% var month = result[result.length-2].subject_month %>
                                           <% var dayOfWeek = new Date(year,month-1).getDay() %>
                                           <!--<template x-for="blankday in blankdays">--><!-- 여기 ejs서 script 함수처리 때리지 말고 js에서 date값 끌어와서 for문 때리면 되지않나?????-->
                                             
@@ -214,7 +220,7 @@
                                             <%}%> 
                                          
                                        
-                                        <% var daysInMonth = new Date(year,month-1,0).getDate() %>
+                                        <% var daysInMonth = new Date(year,month,0).getDate() %>
                                           <!-- <template x-for="(date, dateIndex) in no_of_days" :key="days+'key'"> -->
                                             <!-- <template> -->
                                                 <% for(var i= 1; i<= daysInMonth; i++){%>
@@ -226,8 +232,7 @@
                                                 <% if( today== i){%>
                                                     <!--오늘은 파란색-->
                                                   <div
-                                                      class="inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
-                                                      :class="bg-blue-500 text-white"
+                                                  class="inline-flex bg-blue-500 text-white w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
                                                   ><%=i%></div>
 
                                                   <%}else{%>
@@ -239,19 +244,17 @@
                                                   <%}%> 
                                                   <div style="height: 80px;" class="overflow-y-auto mt-1">
 
-                                                     <!--앞으로 for문으로 수정해야할 부분(과목들 요일에 맞춰서 출력하기)-->
-                                                   <% for(var j=0; j< result.length-1; j++) { %>
+                                                     <!--과목들 일 수에 맞춰서 출력하기-->
+                                                   <% for(var j=0; j< result.length; j++) { %>
 
-                                                   
-                                                    <template x-if="date in no_of_days.filter(e => new Date(year, month, date).toDateString() 
-                                                        ==  new Date(year, month, <%= result[j].subject_date %>).toDateString())" >
+                                                    <% if(result[j].subject_date==i){ %>
                                                         <div
                                                             class="px-2 py-1 rounded-lg mt-1 overflow-hidden border border-blue-200 text-blue-800 bg-blue-100">
                                                             <p class="text-sm truncate leading-tight">
                                                                 <%= result[j].subject_name %>
                                                             </p>
                                                         </div>
-                                                    </template>
+                                                    <% } %>
 
                                                     <% } %>
                                                   </div>
@@ -350,7 +353,7 @@
 
             getNoOfDays() {
                 let daysInMonth = new Date(this.year, this.month + 1, 0).getDate(); //현재 월의 마지막 일 반환(2021.01월 기준 값 31 반환)
-                document.getElementById('month').value = this.month + 1;
+                //document.getElementById('month').value = this.month + 1;
 
                 // find where to start calendar day of week
                 let dayOfWeek = new Date(this.year, this.month).getDay(); //현재 월 시작하는 일 위치 값 반환(2021.01월 기준 1일이 금요일이므로, 값 5 반환됨)

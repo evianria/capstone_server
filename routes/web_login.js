@@ -198,10 +198,12 @@ var profName = function (prof_name, callback) {
     });
 }
 
-var hello = function (req, res) {
+var lastMonth = function (req, res) {
+    console.log("lastMonth 호출됨")
     var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    var month = req.body.month || req.query.month;
-    var month_name = {'month':month};
+    var month_string = req.body.month || req.query.month;
+    var month = parseInt(month_string)-1;
+    var month_name = [{'month':MONTH_NAMES[month-1]}];
     console.log("month값: "+ MONTH_NAMES[month-1])
     mainRestart(paramId, month, function (err, result) {
         res.writeHead('200', { 'Content-Type': 'text/html;charset=utf8' });
@@ -210,21 +212,46 @@ var hello = function (req, res) {
         Array.prototype.push.apply(result, month_name);
         console.log(month_name)
         var context = { result: result };
-        console.log("메인 페이지에 전송되는 데이터: " + JSON.stringify(context));
+        //console.log("페이지에 전송되는 데이터: " + JSON.stringify(context));
         req.app.render('main_page', context, function (err, html) {
-            console.log("메인 페이지로 이동");
+            console.log("이전 달 페이지 이동")
             res.end(html);
         })
 
     });
 }
-module.exports.hello = hello;
+module.exports.lastMonth = lastMonth;
+
+var nextMonth = function (req, res) {
+    console.log("nextMonth 호출됨")
+    var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var month_string = req.body.month || req.query.month;
+    var month = parseInt(month_string)+1;
+    var month_name = [{'month':MONTH_NAMES[month-1]}];
+    console.log("month값: "+ MONTH_NAMES[month-1])
+    mainRestart(paramId, month, function (err, result) {
+        res.writeHead('200', { 'Content-Type': 'text/html;charset=utf8' });
+        main_result = result;
+        change_result = result;
+        Array.prototype.push.apply(result, month_name);
+        console.log(month_name)
+        var context = { result: result };
+        //console.log("페이지에 전송되는 데이터: " + JSON.stringify(context));
+        req.app.render('main_page', context, function (err, html) {
+            console.log("다음 달 페이지 이동");
+            res.end(html);
+        })
+
+    });
+
+}
+module.exports.nextMonth = nextMonth;
 
 // 사용자(교수)의 메인 페이지 과목 리스트 불러오기
 var mainRestart = function (id, month, callback) {
     console.log('mainRestart 호출됨 : ' + month+"월");
 
-    var columns = ['prof_name','subject_date', 'subject_name'];
+    var columns = ['subject_month', 'prof_name','subject_date', 'subject_name'];
     var tablename = 'prof_attend';
     // SQL 문을 실행
     var exec = conn.query("select ?? from ?? where id_prof = ? and subject_month =?", [columns, tablename, id, month], function (err, rows) {

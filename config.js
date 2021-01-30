@@ -12,6 +12,8 @@ module.exports = {
 		,{file:'./attend_button', path:'/process/attstop', method:'attstop', type:'post'}
 		,{file:'./student_calendar', path:'/process/stucalendar', method:'stucalendar', type:'get'}
 		,{file:'./student_calendar', path:'/process/updatestate', method:'updatestate', type:'post'}
+		,{file:'./web_login', path:'/process/lastMonth', method:'lastMonth', type:'post'}
+		,{file:'./web_login', path:'/process/nextMonth', method:'nextMonth', type:'post'}
 		//===== Commute with Android =====//
 		,{file:'./android', path:'/process/ancommute', method:'ancommute', type:'post'}				// commute with android
 		,{file:'./android', path:'/process/ansubject', method:'ansubject', type:'post'}				// send student's subject list
